@@ -1,6 +1,6 @@
 import importlib
 import subprocess 
-
+import asyncio
 from pyrogram import idle
 from ChatBot import app
 from ChatBot.modules import ALL_MODULES
@@ -12,7 +12,9 @@ async def boot():
         importlib.import_module(f"ChatBot.modules.{module}")
 
     await idle()
-    await app.stop()
+   # await app.stop()
 
 if __name__ == "__main__":
-    app.run(boot())    
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(boot())
